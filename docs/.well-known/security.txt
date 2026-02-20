@@ -1,0 +1,7 @@
+# If you find a security issue in any of my projects,
+# I'd genuinely appreciate hearing about it.
+
+Contact: https://github.com/vnykmshr
+Preferred-Languages: en
+Canonical: https://vnykmshr.com/.well-known/security.txt
+Expires: 2027-02-20T00:00:00.000Z
