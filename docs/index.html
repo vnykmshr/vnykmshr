@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  you're looking at the source. good instinct.
+
+  no frameworks. no build tools. no analytics.
+  just html, css, and a little javascript.
+
+  if you got here, we'd probably get along.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Vinayak</title>
+<meta name="description" content="Backend systems, open-source security, small sharp tools.">
+<meta name="author" content="Vinayak">
+
+<!-- open graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vinayak">
+<meta property="og:description" content="Backend systems, open-source security, small sharp tools.">
+<meta property="og:url" content="https://vnykmshr.com">
+
+<!-- twitter card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vinayak">
+<meta name="twitter:description" content="Backend systems, open-source security, small sharp tools.">
+
+<!-- favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
+
+<!-- canonical -->
+<link rel="canonical" href="https://vnykmshr.com">
+
+<!-- structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Vinayak",
+  "url": "https://vnykmshr.com",
+  "sameAs": [
+    "https://github.com/vnykmshr",
+    "https://github.com/1mb-dev"
+  ]
+}
+</script>
+
+<style>
+/* ------------------------------------------------
+   if you're reading this too: hi again.
+   yes, the entire site is one file.
+   no, I don't feel bad about it.
+   ------------------------------------------------ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --fg: #1a1a1a;
+  --fg-dim: #666;
+  --bg: #fafaf8;
+  --accent: #2d5016;
+  --link: #1a5276;
+  --link-hover: #0e3a5c;
+  --border: #ddd;
+  --radius: 2px;
+  --mono: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  --sans: -apple-system, 'Segoe UI', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fg: #e0e0e0;
+    --fg-dim: #999;
+    --bg: #111;
+    --accent: #7db85b;
+    --link: #6db3d6;
+    --link-hover: #9dcbea;
+    --border: #333;
+  }
+}
+
+:root[data-theme="dark"] {
+  --fg: #e0e0e0;
+  --fg-dim: #999;
+  --bg: #111;
+  --accent: #7db85b;
+  --link: #6db3d6;
+  --link-hover: #9dcbea;
+  --border: #333;
+}
+
+:root[data-theme="light"] {
+  --fg: #1a1a1a;
+  --fg-dim: #666;
+  --bg: #fafaf8;
+  --accent: #2d5016;
+  --link: #1a5276;
+  --link-hover: #0e3a5c;
+  --border: #ddd;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .cursor { animation: none !important; opacity: 1; }
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+a:hover, a:focus {
+  color: var(--link-hover);
+  border-bottom-color: var(--link-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* layout */
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+header {
+  padding: 20px 0;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+}
+
+footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: var(--fg-dim);
+}
+
+/* theme toggle */
+
+.theme-toggle {
+  float: right;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg-dim);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  transition: border-color 0.2s, color 0.2s;
+  line-height: 1.4;
+}
+
+.theme-toggle:hover {
+  border-color: var(--fg-dim);
+  color: var(--fg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* content */
+
+.name {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 2px;
+  color: var(--fg);
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.tagline {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--fg-dim);
+  margin-bottom: 32px;
+}
+
+.about {
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+.about p {
+  margin-bottom: 12px;
+}
+
+.about p:last-child {
+  margin-bottom: 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+nav a::before {
+  content: '~ ';
+  color: var(--fg-dim);
+}
+
+.blog-hint {
+  margin-top: 32px;
+  font-size: 0.85rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+}
+
+/* responsive */
+
+@media (max-width: 480px) {
+  html { font-size: 16px; }
+  .name { font-size: 1.4rem; }
+  main { padding: 24px 0; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">auto</button>
+  </div>
+</header>
+
+<!-- the interesting stuff -->
+
+<main>
+  <div class="container">
+    <h1 class="name">vinayak<span class="cursor" aria-hidden="true"></span></h1>
+    <p class="tagline">backend systems / security / open source</p>
+
+    <div class="about">
+      <p>Been building backend systems for a while -- payments, risk, the parts where getting it wrong costs real money.</p>
+      <p>Lately spending time on open-source security. Finding bugs in code everyone trusts, fixing what I can, disclosing the rest.</p>
+      <p>Most of my own work lives at <a href="https://github.com/1mb-dev">1mb-dev</a> -- small Go and Node libraries, nothing fancy, just tools that do one thing well.</p>
+    </div>
+
+    <nav aria-label="Links">
+      <ul>
+        <li><a href="https://github.com/vnykmshr">github</a></li>
+        <li><a href="https://github.com/1mb-dev">1mb-dev</a></li>
+      </ul>
+    </nav>
+
+    <p class="blog-hint">blog: soon.</p>
+  </div>
+</main>
+
+<!--
+  easter egg #2:
+  this page makes zero external requests.
+  no fonts, no analytics, no CDNs.
+  your browser talked to exactly one server.
+  that's how the web should work.
+-->
+
+<footer>
+  <div class="container">
+    <p>just a page on the internet</p>
+  </div>
+</footer>
+
+<script>
+// -------------------------------------------
+// hey, you made it to the javascript.
+// there's not much here. that's the point.
+// -------------------------------------------
+
+(function () {
+  var btn = document.querySelector('.theme-toggle');
+  var root = document.documentElement;
+  var key = 'theme-preference';
+
+  var modes = ['auto', 'dark', 'light'];
+  var saved = localStorage.getItem(key);
+  var current = modes.indexOf(saved) !== -1 ? saved : 'auto';
+
+  function apply(mode) {
+    if (mode === 'auto') {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', mode);
+    }
+    btn.textContent = mode;
+    localStorage.setItem(key, mode);
+    current = mode;
+  }
+
+  apply(current);
+
+  btn.addEventListener('click', function () {
+    var next = modes[(modes.indexOf(current) + 1) % modes.length];
+    apply(next);
+  });
+})();
+</script>
+
+</body>
+</html>
