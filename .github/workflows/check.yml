@@ -1,0 +1,17 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+    paths: [docs/**]
+  pull_request:
+    paths: [docs/**]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: check html hygiene
+        run: make check

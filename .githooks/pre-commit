@@ -1,0 +1,29 @@
+#!/bin/sh
+# pre-commit: keep the repo clean before it hits history
+
+set -e
+
+# no debug artifacts in html/js files
+staged_code=$(git diff --cached --name-only -- '*.html' '*.js')
+if [ -n "$staged_code" ]; then
+  if echo "$staged_code" | xargs grep -ln 'console\.log\|debugger' 2>/dev/null; then
+    echo "pre-commit: found debug artifacts in staged files"
+    exit 1
+  fi
+fi
+
+# run checks if html changed
+if git diff --cached --name-only | grep -q '\.html$'; then
+  make check
+fi
+
+# no large files (>50KB)
+for f in $(git diff --cached --name-only); do
+  if [ -f "$f" ]; then
+    size=$(wc -c < "$f")
+    if [ "$size" -gt 51200 ]; then
+      echo "pre-commit: $f is ${size} bytes (limit 50KB)"
+      exit 1
+    fi
+  fi
+done
