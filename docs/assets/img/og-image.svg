@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1e2233"/>
+      <stop offset="100%" stop-color="#0e1018"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- subtle stars -->
+  <circle cx="200" cy="80" r="1" fill="#fff" opacity="0.3"/>
+  <circle cx="450" cy="150" r="0.8" fill="#fff" opacity="0.2"/>
+  <circle cx="900" cy="100" r="1.2" fill="#fff" opacity="0.25"/>
+  <circle cx="1050" cy="200" r="0.8" fill="#fff" opacity="0.15"/>
+  <circle cx="150" cy="400" r="1" fill="#fff" opacity="0.2"/>
+  <circle cx="1100" cy="450" r="0.8" fill="#fff" opacity="0.2"/>
+
+  <!-- owl - positioned left of center -->
+  <g transform="translate(340, 180) scale(2.8)">
+    <!-- ear tufts -->
+    <polygon points="16,12 22,26 10,26" fill="#5c4a2e"/>
+    <polygon points="48,12 54,26 42,26" fill="#5c4a2e"/>
+    <!-- body -->
+    <ellipse cx="32" cy="50" rx="18" ry="24" fill="#4a3d28"/>
+    <!-- head -->
+    <ellipse cx="32" cy="36" rx="20" ry="18" fill="#6b5a3a"/>
+    <!-- chest lines -->
+    <path d="M22,45 Q32,48 42,45" fill="none" stroke="#5c4a2e" stroke-width="0.5" opacity="0.5"/>
+    <path d="M23,50 Q32,53 41,50" fill="none" stroke="#5c4a2e" stroke-width="0.5" opacity="0.5"/>
+    <path d="M24,55 Q32,58 40,55" fill="none" stroke="#5c4a2e" stroke-width="0.5" opacity="0.5"/>
+    <!-- eyes -->
+    <circle cx="24" cy="34" r="9" fill="#c8a832"/>
+    <circle cx="40" cy="34" r="9" fill="#c8a832"/>
+    <circle cx="24" cy="34" r="4.5" fill="#1a1e2e"/>
+    <circle cx="40" cy="34" r="4.5" fill="#1a1e2e"/>
+    <circle cx="26" cy="32" r="1.5" fill="#e8d878" opacity="0.6"/>
+    <circle cx="42" cy="32" r="1.5" fill="#e8d878" opacity="0.6"/>
+    <!-- beak -->
+    <polygon points="32,38 29,43 35,43" fill="#8a7540"/>
+    <!-- branch -->
+    <line x1="10" y1="72" x2="54" y2="72" stroke="#5c4a2e" stroke-width="2" stroke-linecap="round"/>
+    <!-- feet -->
+    <path d="M26,70 L26,72 M28,70 L28,72 M30,70 L30,72" stroke="#8a7540" stroke-width="1"/>
+    <path d="M34,70 L34,72 M36,70 L36,72 M38,70 L38,72" stroke="#8a7540" stroke-width="1"/>
+  </g>
+
+  <!-- text - right side -->
+  <text x="680" y="275" font-family="'SF Mono','Menlo','Consolas',monospace" font-size="48" font-weight="600" fill="#e0e0e0">vinayak</text>
+  <text x="680" y="275" font-family="'SF Mono','Menlo','Consolas',monospace" font-size="48" font-weight="600" fill="#e0e0e0">vinayak<tspan fill="#7db85b" font-weight="400">_</tspan></text>
+
+  <text x="680" y="330" font-family="-apple-system,'Segoe UI',system-ui,sans-serif" font-size="22" fill="#999">backend systems / security / open source</text>
+
+  <!-- url hint -->
+  <text x="680" y="420" font-family="'SF Mono','Menlo','Consolas',monospace" font-size="16" fill="#555">~ vnykmshr.com</text>
+</svg>

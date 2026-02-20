@@ -1,6 +1,9 @@
-.PHONY: setup serve check clean
+.PHONY: help setup serve check clean
 
 PORT ?= 8000
+
+help: ## show targets
+	@grep -E '^[a-z].*:.*##' Makefile | sed 's/:.*##/  —/' | sort
 
 setup: ## configure git hooks
 	git config core.hooksPath .githooks
@@ -21,19 +24,16 @@ check: ## validate html and check hygiene
 	done
 	@echo "checking for external requests (src=, link href=, @import)"
 	@if grep -rEn '(src|link.*href)=.https?://' docs/*.html | grep -v 'data:image' | grep -v 'rel="canonical"' | grep -v 'rel="icon"'; then \
-		echo "  ^ unexpected external requests"; \
-	elif grep -rn '@import.*https\?://' docs/*.html; then \
+		echo "  ^ unexpected external requests in html"; \
+	elif grep -rn '@import.*https\?://' docs/assets/css/*.css 2>/dev/null; then \
 		echo "  ^ unexpected css import"; \
 	else \
 		echo "  none found"; \
 	fi
 	@echo "file sizes"
-	@wc -c docs/*.html | sort -n
+	@wc -c docs/*.html docs/assets/css/*.css docs/assets/js/*.js 2>/dev/null | sort -n
 	@echo "done"
 
 clean: ## remove os artifacts
 	find . -name '.DS_Store' -delete
 	find . -name '*~' -delete
-
-help: ## show targets
-	@grep -E '^[a-z].*:.*##' Makefile | sed 's/:.*##/  —/' | sort
