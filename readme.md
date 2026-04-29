@@ -8,4 +8,4 @@ most of my own work lives at [1mb-dev](https://github.com/1mb-dev) -- small Go a
 
 Go mostly, some Python and Node. PostgreSQL when the data matters.
 
-open to interesting problems and collaborations.
+open to a good problem.
