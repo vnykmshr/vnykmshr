@@ -177,7 +177,20 @@ footer p {
   font-family: var(--mono);
   font-size: 0.85rem;
   color: var(--fg-dim);
+  margin-bottom: 8px;
+}
+
+.now {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--fg-dim);
   margin-bottom: 32px;
+  opacity: 0.85;
+}
+
+.now span {
+  color: var(--accent);
+  margin-right: 6px;
 }
 
 .about {
@@ -196,21 +209,20 @@ footer p {
 nav ul {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   font-family: var(--mono);
   font-size: 0.85rem;
 }
 
+nav a {
+  display: inline-block;
+  padding: 4px 0;
+}
+
 nav a::before {
   content: '~ ';
   color: var(--fg-dim);
-}
-
-.blog-hint {
-  margin-top: 32px;
-  font-size: 0.85rem;
-  color: var(--fg-dim);
-  font-family: var(--mono);
 }
 
 /* responsive */

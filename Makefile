@@ -15,7 +15,7 @@ serve: ## serve site locally
 
 check: ## validate html and check hygiene
 	@echo "checking docs/"
-	@for f in docs/*.html; do \
+	@find docs -name '*.html' | while read -r f; do \
 		echo "  $$f"; \
 		grep -qn '<!DOCTYPE html>' "$$f" || echo "    missing doctype"; \
 		grep -qn '<html lang=' "$$f" || echo "    missing lang attribute"; \
@@ -23,7 +23,7 @@ check: ## validate html and check hygiene
 		grep -qn 'viewport' "$$f" || echo "    missing viewport"; \
 	done
 	@echo "checking for external requests (src=, link href=, @import)"
-	@if grep -rEn '(src|link.*href)=.https?://' docs/*.html | grep -v 'data:image' | grep -v 'rel="canonical"' | grep -v 'rel="icon"'; then \
+	@if find docs -name '*.html' -exec grep -EHn '(src|link.*href)=.https?://' {} + | grep -v 'data:image' | grep -v 'rel="canonical"' | grep -v 'rel="icon"' | grep .; then \
 		echo "  ^ unexpected external requests in html"; \
 	elif grep -rn '@import.*https\?://' docs/assets/css/*.css 2>/dev/null; then \
 		echo "  ^ unexpected css import"; \
@@ -31,7 +31,7 @@ check: ## validate html and check hygiene
 		echo "  none found"; \
 	fi
 	@echo "file sizes"
-	@wc -c docs/*.html docs/assets/css/*.css docs/assets/js/*.js 2>/dev/null | sort -n
+	@find docs -name '*.html' -o -name '*.css' -o -name '*.js' | xargs wc -c 2>/dev/null | sort -n
 	@echo "done"
 
 clean: ## remove os artifacts

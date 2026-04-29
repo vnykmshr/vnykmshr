@@ -23,10 +23,18 @@
     current = mode;
   }
 
-  apply(current);
+  function cycle() {
+    apply(modes[(modes.indexOf(current) + 1) % modes.length]);
+  }
 
-  btn.addEventListener('click', function () {
-    var next = modes[(modes.indexOf(current) + 1) % modes.length];
-    apply(next);
+  apply(current);
+  btn.addEventListener('click', cycle);
+
+  // 't' to cycle theme. ignore when typing in inputs/contenteditable.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 't' || e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    cycle();
   });
 })();
