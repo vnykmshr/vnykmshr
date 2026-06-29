@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  /now - what i'm up to right now.
+  inspired by nownownow.com.
+
+  this page is meant to go stale. it's a snapshot, not a feed.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+<meta name="robots" content="index, follow">
+<title>now - vnykmshr.com</title>
+<meta name="description" content="What Vinayak is working on, thinking about, and writing right now.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
+<link rel="canonical" href="https://vnykmshr.com/now/">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!-- open graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="now - Vinayak">
+<meta property="og:description" content="What Vinayak is working on, thinking about, and writing right now.">
+<meta property="og:url" content="https://vnykmshr.com/now/">
+<meta property="og:image" content="https://vnykmshr.com/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="now - Vinayak">
+<meta name="twitter:description" content="What Vinayak is working on, thinking about, and writing right now.">
+<meta name="twitter:image" content="https://vnykmshr.com/assets/img/og-image.jpg">
+<style>
+  main { display: block; padding: 40px 0; }
+  .now-page { font-family: var(--mono); max-width: 560px; }
+  .now-page .updated { font-size: 0.75rem; color: var(--fg-dim); margin-bottom: 36px; opacity: 0.7; }
+  .now-page h2 { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+  .now-page h2::before { content: '> '; }
+  .now-page section { margin-bottom: 28px; }
+  .now-page p, .now-page li { font-size: 0.8rem; color: var(--fg); line-height: 1.7; }
+  .now-page ul { list-style: none; }
+  .now-page li { margin-bottom: 6px; }
+  .now-page time { color: var(--fg-dim); font-size: 0.72rem; margin-right: 8px; }
+  .now-page .fallback { color: var(--fg-dim); font-size: 0.75rem; font-style: italic; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">auto</button>
+  </div>
+</header>
+
+<main>
+  <div class="container now-page">
+    <h1 class="name">~/now<span class="cursor" aria-hidden="true"></span></h1>
+    <p class="updated">updated: 2026-06-29</p>
+
+    <section>
+      <h2>working on</h2>
+      <p>building small libraries, mostly in Go. the kind that sit deep in a dependency tree and don't break.</p>
+    </section>
+
+    <section>
+      <h2>thinking about</h2>
+      <p>how trust forms in codebases - one commit at a time, not by title. the defaults we inherit without reading the source. the gap between what a system reports and what's actually happening.</p>
+    </section>
+
+    <section>
+      <h2>writing</h2>
+      <div id="writing-posts">
+        <noscript><p class="fallback"><a href="https://blog.vnykmshr.com">recent posts at blog.vnykmshr.com</a></p></noscript>
+      </div>
+    </section>
+
+    <nav aria-label="Links">
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="https://blog.vnykmshr.com">blog</a></li>
+      </ul>
+    </nav>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>just a page on the internet</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+<script>
+(function () {
+  var container = document.getElementById('writing-posts');
+  if (!container) return;
+
+  fetch('https://blog.vnykmshr.com/feed.json')
+    .then(function (r) { return r.json(); })
+    .then(function (feed) {
+      var items = feed && Array.isArray(feed.items) ? feed.items : [];
+      var posts = items.slice(0, 5);
+      if (!posts.length) {
+        container.textContent = '';
+        var p = document.createElement('p');
+        p.className = 'fallback';
+        p.textContent = 'nothing posted yet - ';
+        var a = document.createElement('a');
+        a.href = 'https://blog.vnykmshr.com';
+        a.textContent = 'visit the blog';
+        p.appendChild(a);
+        container.appendChild(p);
+        return;
+      }
+      var ul = document.createElement('ul');
+      posts.forEach(function (p) {
+        var li = document.createElement('li');
+        var time = document.createElement('time');
+        time.textContent = p.date_published ? p.date_published.slice(0, 10) : '';
+        li.appendChild(time);
+        li.appendChild(document.createTextNode(' '));
+        var a = document.createElement('a');
+        var safe = /^https?:\/\//i.test(p.url);
+        a.href = safe ? p.url : '#';
+        a.textContent = safe ? p.title : p.title + ' (blocked)';
+        if (!safe) a.style.textDecoration = 'line-through';
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      container.textContent = '';
+      container.appendChild(ul);
+    })
+    .catch(function () {
+      container.textContent = '';
+      var p = document.createElement('p');
+      p.className = 'fallback';
+      p.textContent = "(couldn't reach the blog - ";
+      var a = document.createElement('a');
+      a.href = 'https://blog.vnykmshr.com';
+      a.textContent = 'visit directly';
+      p.appendChild(a);
+      p.appendChild(document.createTextNode(')'));
+      container.appendChild(p);
+    });
+})();
+</script>
+
+</body>
+</html>

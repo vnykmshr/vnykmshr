@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
 <meta name="robots" content="noindex">
-<title>404 -- vnykmshr.com</title>
+<title>404 - vnykmshr.com</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
@@ -19,6 +19,7 @@ body { align-items: center; justify-content: center; text-align: center; }
 main { display: block; padding: 24px; }
 h1 { font-family: var(--mono); font-size: 3rem; font-weight: 600; margin-bottom: 12px; }
 p { color: var(--fg-dim); margin-bottom: 24px; }
+p.moved { color: var(--fg); }
 </style>
 </head>
 <body>
@@ -28,5 +29,28 @@ p { color: var(--fg-dim); margin-bottom: 24px; }
   <p>nothing here. probably never was.</p>
   <a href="/">back to something</a>
 </main>
+<script>
+(function () {
+  var path = window.location.pathname;
+  if (path.indexOf('/article/') !== 0) return;
+
+  var h1 = document.querySelector('h1');
+  var p = document.querySelector('main p');
+  var a = document.querySelector('main a');
+
+  h1.textContent = 'moved';
+  p.textContent = 'this was at the old blog.';
+  p.className = 'moved';
+  a.textContent = 'blog.vnykmshr.com';
+  a.href = 'https://blog.vnykmshr.com';
+
+  var sep = document.createTextNode(' · ');
+  var home = document.createElement('a');
+  home.href = '/';
+  home.textContent = 'home';
+  a.parentNode.insertBefore(sep, a.nextSibling);
+  a.parentNode.insertBefore(home, sep.nextSibling);
+})();
+</script>
 </body>
 </html>
