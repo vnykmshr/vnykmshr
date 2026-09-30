@@ -1,7 +1,6 @@
 /* TEAM */
 Name: Vinayak
 Site: https://vnykmshr.com
-Blog: https://blog.vnykmshr.com
 GitHub: https://github.com/vnykmshr
 
 /* SITE */
