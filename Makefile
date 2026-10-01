@@ -1,6 +1,7 @@
-.PHONY: help setup serve check clean
+.PHONY: help setup serve check check-feed clean
 
 PORT ?= 8000
+FEED := $(shell sed -n "s/.*fetch.'\([^']*\)'.*/\1/p" docs/now/index.html)
 
 help: ## show targets
 	@grep -E '^[a-z].*:.*##' Makefile | sed 's/:.*##/  —/' | sort
@@ -33,6 +34,15 @@ check: ## validate html and check hygiene
 	@echo "file sizes"
 	@find docs -name '*.html' -o -name '*.css' -o -name '*.js' | xargs wc -c 2>/dev/null | sort -n
 	@echo "done"
+
+check-feed: ## check the /now feed loads cross-origin (network, not in ci)
+	@[ -n "$(FEED)" ] || { echo "no fetch() url found in docs/now/index.html"; exit 1; }
+	@echo "checking $(FEED)"
+	@h=$$(curl -sS -o /dev/null -D - -H 'Origin: https://vnykmshr.com' "$(FEED)") || exit 1; \
+	echo "$$h" | head -1 | grep -q ' 200' || { echo "  expected 200, got: $$(echo "$$h" | head -1)"; echo "  a redirect fails cross-origin -- point the fetch at the final url"; exit 1; }; \
+	echo "$$h" | grep -Eiq '^access-control-allow-origin: (\*|https://vnykmshr\.com)' || { echo "  no access-control-allow-origin for vnykmshr.com -- browsers will block the fetch"; exit 1; }
+	@curl -sS "$(FEED)" | python3 -c 'import json,sys; i=json.load(sys.stdin)["items"]; assert isinstance(i,list); print(f"  ok, {len(i)} items")' 2>/dev/null \
+		|| { echo "  not a json feed with an items list"; exit 1; }
 
 clean: ## remove os artifacts
 	find . -name '.DS_Store' -delete
